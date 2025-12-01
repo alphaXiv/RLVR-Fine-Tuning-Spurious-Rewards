@@ -60,7 +60,9 @@ cd code
 python eval_checkpoint.py --model_path Qwen/Qwen2.5-Math-7B --datasets MATH-500,AIME-2024,AIME-2025,AMC
 
 # For MATH-500 evaluation matching our reported scores in wandb using checkpoints (requires NVIDIA H200 for exact reproduction)
-python eval_checkpoint.py --model_path {} --datasets MATH-500,AIME-2024,AIME-2025,AMC --shards 2
+
+python export_checkpoint.py
+python eval_checkpoint.py --model_path {your-exported-model-checkpoint-folder-here} --datasets MATH-500,AIME-2024,AIME-2025,AMC --shards 2
 ```
 
 Note: To exactly reproduce `temperature = 0` results, both the GPU type and `--shards` parameter must match the original evaluation setup. This is because the batch size passed into VLLM can cause generation fluctuations.
