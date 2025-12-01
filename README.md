@@ -75,6 +75,7 @@ cd code
 conda create -n spurious-rewards python=3.10 
 conda activate spurious-rewards
 
+Now there is some order of steps for reproduction on NVIDIA CUDA 12.8
 pip install -r requirements.txt
 pip uninstall vllm
 pip install vllm==0.7.2
