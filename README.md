@@ -99,7 +99,7 @@ to
         "vllm": ["vllm==0.7.2"],
         "vllm_latest": ["vllm>0.6.4.post1"],
     },
-pip install flash_attn==2.7.0.post2
+pip install flash_attn==2.7.0.post2 --no-build-isolation
 pip install -e .
 
 
