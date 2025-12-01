@@ -34,10 +34,7 @@ pip install flash_attn==2.7.0.post2
 pip install -e .
 ```
 
-## Training
-```sh
-bash scripts/rlvr_deepscaler_grpo_qwen_ground_truth.sh
-```
+
 
 ## Configurations
 
@@ -60,13 +57,54 @@ To reproduce our evaluation results, use the following commands:
 cd code
 
 # For MATH-500 evaluation (requires NVIDIA A100 80GB PCIe for exact reproduction)
-python scripts/eval_checkpoint.py --model_path Qwen/Qwen2.5-Math-7B --datasets MATH-500,AIME-2024,AIME-2025,AMC
+python eval_checkpoint.py --model_path Qwen/Qwen2.5-Math-7B --datasets MATH-500,AIME-2024,AIME-2025,AMC
 
 # For MATH-500 evaluation matching our reported scores in wandb using checkpoints (requires NVIDIA H200 for exact reproduction)
-python scripts/eval_checkpoint.py --model_path {} --datasets MATH-500,AIME-2024,AIME-2025,AMC --shards 2
+python eval_checkpoint.py --model_path {} --datasets MATH-500,AIME-2024,AIME-2025,AMC --shards 2
 ```
 
 Note: To exactly reproduce `temperature = 0` results, both the GPU type and `--shards` parameter must match the original evaluation setup. This is because the batch size passed into VLLM can cause generation fluctuations.
+
+
+## Fine Tuning models (RLVR)
+
+```sh
+git clone https://github.com/alphaXiv/RLVR-Fine-Tuning-Spurious-Rewards.git
+cd code
+
+conda create -n spurious-rewards python=3.10 
+conda activate spurious-rewards
+
+pip install -r requirements.txt
+pip uninstall vllm
+pip install vllm==0.7.2
+
+```
+
+```sh
+
+open setup.py
+
+change the section
+
+ extras_require={
+        "vllm": ["vllm"],
+        "vllm_latest": ["vllm>0.6.4.post1"],
+    },
+
+to
+
+ extras_require={
+        "vllm": ["vllm==0.7.2"],
+        "vllm_latest": ["vllm>0.6.4.post1"],
+    },
+pip install flash_attn==2.7.0.post2
+pip install -e .
+
+
+bash scripts/rlvr_deepscaler_grpo_qwen_ground_truth.sh
+
+```
 
 ## Paper
 
